@@ -1,26 +1,17 @@
 import os
 import re
+import argparse
 
-TEXT = "main/"
-
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+TEXT = ""
 
 def displayPathInfo():
 	dirpath = os.getcwd()
-	print(bcolors.OKBLUE + "Current Directory is : " + dirpath + bcolors.ENDC)
+	print("Current Directory is : " + dirpath )
 	foldername = os.path.basename(dirpath)
-	print(bcolors.FAIL + "Directory name is : " + foldername + bcolors.ENDC)
+	print( "Directory name is : " + foldername )
 
 def getPath():
-	PATH = input(bcolors.HEADER + "\nEnter file name/location : " + bcolors.ENDC)
+	PATH = input( "\nEnter file name/location : " )
 	return PATH
 
 def checkLine(line):
@@ -89,33 +80,71 @@ def processLine(line):
 	
 	return buffer
 
-displayPathInfo()
-filepath = getPath()
+def func(directory, filepath, fname) :
 
-if filepath.__contains__('/'):
-	fname = filepath[filepath.rfind('/')+1:]
-	extension = filepath[filepath.rfind('.')+1:]
-	print(fname + " " + extension)
-else:
-	fname = filepath
-	extension = filepath[filepath.rfind('.')+1:]
-	print(fname + " " + extension)
+	"""if filepath.__contains__('/'):
+		fname = filepath[filepath.rfind('/')+1:]
+		extension = filepath[filepath.rfind('.')+1:]
+		print(fname + " " + extension)
+	else:
+		fname = filepath
+		extension = filepath[filepath.rfind('.')+1:]
+		print(fname + " " + extension)"""
+	
+	fname = fname.split(".")[0]
+	extension = "html"
+	save_path = os.path.join(directory,"Modified_files")
+	save_path = os.path.join(save_path, fname)
+	f= open(save_path + "." + extension , "w+")
 
-f= open(fname + "_modified." + extension, "w+")
-
-try:
-	with open(filepath) as fp:
-		line = fp.readline()
-		cnt = 1
-		while line:
-			temp = processLine(line)
+	try:
+		with open(filepath) as fp:
 			line = fp.readline()
-			cnt += 1
-			f.write(temp)
+			cnt = 1
+			while line:
+				temp = processLine(line)
+				line = fp.readline()
+				cnt += 1
+				f.write(temp)
 
-except IOError:
-    print('An error occurred trying to read the file.')
-finally:
-	f.close()
+	except IOError:
+		print('An error occurred trying to read the file.')
+	finally:
+		f.close()
 
-print(bcolors.OKGREEN + "Succeeded" + bcolors.ENDC)
+	print("Succeeded.. Generated Modified_Files/"+ fname  + "."+extension+" in the directory passed.")
+
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(description='Converts specified html files or all html files to django format within a \n specified directory.')
+	parser.add_argument('files', metavar='f', type=str, nargs='*', help='provide file names to convert')
+	parser.add_argument('-d', dest='base_directory',  type=str, nargs='?', help='Provide base directory')
+	parser.add_argument('-a', dest='app_name',  type=str, nargs='?', help='provide django app name')
+
+	args = parser.parse_args()
+
+	files = args.files
+	directory = args.base_directory
+	text = args.base_directory
+
+	if text is not None :
+		TEXT = text+"/"
+
+	if text is not None :
+		directory = directory
+	else :
+		directory = os.getcwd()
+
+	print (directory)
+
+	files_to_change = []
+	if not os.path.exists(os.path.join(directory,"Modified_files")) :
+		os.mkdir(os.path.join(directory,"Modified_files"))
+
+	if files != [] :
+		for i in files :
+			func(directory, directory+"/"+i,i)
+	
+	else :
+		for file in os.listdir(directory):
+			if file.endswith(".html"):
+				func(directory, directory+"/"+file,file)
