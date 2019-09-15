@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
 	files = args.files
 	directory = args.base_directory
-	text = args.base_directory
+	text = args.app_name
 
 	if text is not None :
 		TEXT = text+"/"
@@ -134,7 +134,8 @@ if __name__ == "__main__":
 	else :
 		directory = os.getcwd()
 
-	print (directory)
+	print("Directory : " + directory)
+	print("app_name : " + text)
 
 	files_to_change = []
 	if not os.path.exists(os.path.join(directory,"Modified_files")) :
