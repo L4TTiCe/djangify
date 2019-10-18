@@ -135,7 +135,7 @@ if __name__ == "__main__":
 		directory = os.getcwd()
 
 	print("Directory : " + directory)
-	print("app_name : " + text)
+	print("app_name  : " + str(text))
 
 	files_to_change = []
 	if not os.path.exists(os.path.join(directory,"Modified_files")) :
