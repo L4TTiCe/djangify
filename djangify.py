@@ -119,25 +119,23 @@ def func(directory, filepath, fname) :
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='Converts specified html files or all html files to django format within a \n specified directory.')
 	parser.add_argument('files', metavar='f', type=str, nargs='*', help='provide file names to convert')
-	parser.add_argument('-d', dest='base_directory',  type=str, nargs='?', help='Provide base directory')
 	parser.add_argument('-a', dest='app_name',  type=str, nargs='?', help='provide django app name')
+	parser.add_argument('-d', dest='base_directory',  type=str, nargs='?', help='Provide base directory')
 
 	args = parser.parse_args()
 
 	files = args.files
 	directory = args.base_directory
-	text = args.app_name
+	app_name = args.app_name
 
-	if text is not None :
-		TEXT = text+"/"
+	if app_name is not None :
+		TEXT = app_name+"/"
 
-	if text is not None :
-		directory = directory
-	else :
+	if directory is None :
 		directory = os.getcwd()
 
-	print("Directory : " + directory)
-	print("app_name  : " + str(text))
+	print("Directory : " + str(directory))
+	print("app_name  : " + str(app_name))
 
 	files_to_change = []
 	if not os.path.exists(os.path.join(directory,"Modified_files")) :
