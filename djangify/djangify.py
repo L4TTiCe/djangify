@@ -54,6 +54,7 @@ def getIndex(line, word):
 	return (start, end)
 
 def djangify(line):
+	global TEXT
 	#print(line)
 	if containsURL(line):
 		return line
@@ -115,7 +116,10 @@ def func(directory, filepath, fname) :
 
 	logging.info("Succeeded.. Generated Modified_Files/"+ fname  + "."+extension+" in the directory passed.")
 
-if __name__ == "__main__":
+def main():
+	
+	global TEXT
+
 	parser = argparse.ArgumentParser(description='Converts specified html files or all html files to django format within a \n specified directory.')
 	parser.add_argument('files', metavar='f', type=str, nargs='*', help='provide file names to convert')
 	parser.add_argument('-a', dest='app_name',  type=str, nargs='?', help='provide django app name')
@@ -136,7 +140,6 @@ if __name__ == "__main__":
 	logging.info("Directory : " + str(directory))
 	logging.info("app_name  : " + str(app_name))
 
-	files_to_change = []
 	if not os.path.exists(os.path.join(directory,"Modified_files")) :
 		os.mkdir(os.path.join(directory,"Modified_files"))
 

@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: djangify
+Version: 0.1.0
+Summary: A Python script that converts HTML Files / Templates to Django compatible HTML Templates.
+Home-page: https://github.com/L4TTiCe/djangify
+Author: amartya
+Author-email: amarkaushik1999@gmail.com
+License: MIT
+Description: A Python script that converts HTML Files /   Templates to Django compatible HTML Templates.
+Keywords: djangify django templates
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown

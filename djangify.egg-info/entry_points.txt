@@ -1,0 +1,3 @@
+[console_scripts]
+djangify = djangify.djangify:main
+

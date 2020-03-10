@@ -1,0 +1,11 @@
+README.md
+setup.cfg
+setup.py
+djangify/__init__.py
+djangify/djangify.py
+djangify.egg-info/PKG-INFO
+djangify.egg-info/SOURCES.txt
+djangify.egg-info/dependency_links.txt
+djangify.egg-info/entry_points.txt
+djangify.egg-info/not-zip-safe
+djangify.egg-info/top_level.txt
