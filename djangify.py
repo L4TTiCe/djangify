@@ -3,18 +3,17 @@
 import os
 import re
 import argparse
+import logging
+
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 TEXT = ""
 
 def displayPathInfo():
 	dirpath = os.getcwd()
-	print("Current Directory is : " + dirpath )
+	logging.info("Current Directory is : " + dirpath )
 	foldername = os.path.basename(dirpath)
-	print( "Directory name is : " + foldername )
-
-def getPath():
-	PATH = input( "\nEnter file name/location : " )
-	return PATH
+	logging.info( "Directory name is : " + foldername )
 
 def checkLine(line):
 	words = ['src', 'href', 'url']
@@ -110,11 +109,11 @@ def func(directory, filepath, fname) :
 				f.write(temp)
 
 	except IOError:
-		print('An error occurred trying to read the file.')
+		logging.error('An error occurred trying to read the file.')
 	finally:
 		f.close()
 
-	print("Succeeded.. Generated Modified_Files/"+ fname  + "."+extension+" in the directory passed.")
+	logging.info("Succeeded.. Generated Modified_Files/"+ fname  + "."+extension+" in the directory passed.")
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='Converts specified html files or all html files to django format within a \n specified directory.')
@@ -134,8 +133,8 @@ if __name__ == "__main__":
 	if directory is None :
 		directory = os.getcwd()
 
-	print("Directory : " + str(directory))
-	print("app_name  : " + str(app_name))
+	logging.info("Directory : " + str(directory))
+	logging.info("app_name  : " + str(app_name))
 
 	files_to_change = []
 	if not os.path.exists(os.path.join(directory,"Modified_files")) :
