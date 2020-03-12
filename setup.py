@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages 
 
 
-long_description = 'A Python script that converts HTML Files / \
-  Templates to Django compatible HTML Templates.' 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup( 
 		name ='djangify', 
