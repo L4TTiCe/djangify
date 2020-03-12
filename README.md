@@ -1,6 +1,10 @@
 # Djangify
 A Python script that converts HTML Files / Templates to Django compatible HTML Templates.
 
+## Installation
+
+    pip install djangify
+
 ## Usage Info
     
     username@hostname $ ./djangify.py -h
