@@ -1,0 +1,3 @@
+dist/
+djangify/__pycache__
+djangify.egg-info/

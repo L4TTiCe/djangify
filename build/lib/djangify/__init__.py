@@ -1,1 +1,0 @@
-from djangify import djangify

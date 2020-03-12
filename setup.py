@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup( 
 		name ='djangify', 
-		version ='0.1.0', 
+		version ='1.0.0', 
 		author ='amartya', 
 		author_email ='amarkaushik1999@gmail.com', 
 		url ='https://github.com/L4TTiCe/djangify', 
@@ -20,11 +20,11 @@ setup(
 				'djangify = djangify.djangify:main'
 			] 
 		}, 
-		classifiers =( 
+		classifiers =[ 
 			"Programming Language :: Python :: 3", 
 			"License :: OSI Approved :: MIT License", 
 			"Operating System :: OS Independent", 
-		), 
+		], 
 		keywords ='djangify django templates', 
 		zip_safe = False
 ) 
