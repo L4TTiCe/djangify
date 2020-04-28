@@ -42,3 +42,6 @@ After script execution :
     <img class="mySlides" src=" {% static 'blog/res/landreg/1.jpg' %} " style="width:100%">
     <li><a href=" {% static 'blog/register.html' %} ">Register</a></li>
 ```
+
+
+Brought to you by : <a href="https://ohuru.tech/"">Ohuru</a>
