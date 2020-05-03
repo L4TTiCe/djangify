@@ -1,5 +1,6 @@
 # Djangify
-A Python script that converts HTML Files / Templates to Django compatible HTML Templates.
+A Python script that converts HTML Files / Templates to Django compatible HTML Templates. 
+Brought to you by : <a href="https://ohuru.tech/">Ohuru</a>
 
 ## Installation
 
@@ -42,6 +43,3 @@ After script execution :
     <img class="mySlides" src=" {% static 'blog/res/landreg/1.jpg' %} " style="width:100%">
     <li><a href=" {% static 'blog/register.html' %} ">Register</a></li>
 ```
-
-
-Brought to you by : <a href="https://ohuru.tech/">Ohuru</a>
