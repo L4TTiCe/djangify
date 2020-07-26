@@ -8,7 +8,7 @@ Brought to you by : <a href="https://ohuru.tech/">Ohuru</a>
 
 ## Usage Info
     
-    username@hostname $ ./djangify.py -h
+    username@hostname $ djangify -h
     usage: djangify.py [-h] [-d [BASE_DIRECTORY]] [-a [APP_NAME]] [f [f ...]]
 
     Converts specified html files or all html files to django format within a
@@ -28,7 +28,7 @@ Converts all the HTML files specified in the files (' f ') argument into Django 
 #### For Example:
 To process a set of HTML files, copy the djangify.py script to the directory containing these HTML files, and run the following command, (Here 'blog' refers to the App name for which we are processing these files)
     
-    $ ./djangify.py -a blog
+    $ djangify -a blog
   
 This command will replace all local files referenced in 'src', 'href' and 'url' tags in the following way :
   
@@ -43,3 +43,5 @@ After script execution :
     <img class="mySlides" src=" {% static 'blog/res/landreg/1.jpg' %} " style="width:100%">
     <li><a href=" {% static 'blog/register.html' %} ">Register</a></li>
 ```
+
+The generated files from app `Blog` will reside inside `Modified_Files`
