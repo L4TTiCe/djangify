@@ -44,4 +44,4 @@ After script execution :
     <li><a href=" {% static 'blog/register.html' %} ">Register</a></li>
 ```
 
-The generated file from app `Blog` will reside inside `Modified_Files`
+The generated files from app `Blog` will reside inside `Modified_Files`
