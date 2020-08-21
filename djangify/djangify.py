@@ -231,6 +231,8 @@ def processFile(directory: str, filepath: str, fname: str):
     save_path = os.path.join(save_path, fname)
     # Open a blank file to write translated HTML to
     f = open(save_path + "." + extension, "w+")
+    f.write("{% load static %}"
+    f.write("\n")
 
     try:
         # Opening the file
