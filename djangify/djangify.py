@@ -97,7 +97,7 @@ def contains_url(line: str):
     """
 
     URL = "(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))" \
-        "([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+          "([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
     if re.match(URL, line):
         return True
     else:
@@ -142,7 +142,7 @@ def get_index(line: str, word: str):
         start = (index + len(word) + 2)
         quote = line[start - 1]
         end = line.find(quote, start)
-        
+
     return start, end
 
 
@@ -190,7 +190,7 @@ def process_line(line: str):
     str\n
             Translated HTML that is Django compatible
     """
-    
+
     # Converts line into a list of words, using checkLine()
     instances = check_line(line)
 
@@ -231,7 +231,7 @@ def process_file(directory: str, filepath: str, fname: str):
     save_path = os.path.join(save_path, fname)
     # Open a blank file to write translated HTML to
     f = open(save_path + "." + extension, "w+")
-    f.write("{% load static %}"
+    f.write("{% load static %}")
     f.write("\n")
 
     try:
@@ -332,5 +332,6 @@ def main():
         for file in os.listdir(directory):
             if file.endswith(".html"):
                 process_file(directory, directory + "/" + file, file)
+
 
 main()
