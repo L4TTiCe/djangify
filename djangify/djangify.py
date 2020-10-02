@@ -62,9 +62,9 @@ def check_line(line: str):
     Returns
     -------
     list\n
-            a list of words found in the string 'line', if the word is a keyword,
-            then instead of only the word, a tuple in the form of (True, word) is
-            added
+            a list of words found in the string 'line', if the word is
+            a keyword,then instead of only the word, a tuple in the
+            form of (True, word) is added
     """
 
     key_words = ['src', 'href', 'url']
@@ -96,8 +96,8 @@ def contains_url(line: str):
             True if it contains URL and False if no URL in 'line'
     """
 
-    URL = "(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))" \
-          "([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+    URL = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))" \
+          r"([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
     if re.match(URL, line):
         return True
     else:
@@ -111,8 +111,8 @@ def get_index(line: str, word: str):
     Parameters
     ----------
     line : str\n
-            A string containing the 'word' from which indexes are to be extracted
-            from
+            A string containing the 'word' from which indexes are
+            to be extracted from
     word : str\n
             A string that need to be found in the 'line', and need indexes
             extracted
@@ -212,7 +212,7 @@ def process_file(directory: str, filepath: str, fname: str):
     friendly HTML.
 
     Saves the translated files in a newly created directory, "Modified_files"
-    
+
     Parameters
     ----------
     directory : str\n
@@ -266,8 +266,9 @@ def main():
 
     # Defines Argument Parser and fefines flags and expected inputs
     parser = argparse.ArgumentParser(
-        description='Converts specified html files or all html files to \
-			django format within a \n specified directory.'
+        description='Converts specified html files or '
+                    'all html files to django format within '
+                    'a \n specified directory.'
     )
     # Defines the -f flag, standing for files, to gey file nameof the HTML
     # file to convert
@@ -317,7 +318,7 @@ def main():
     logging.info("Directory : " + str(directory))
     logging.info("app_name  : " + str(app_name))
 
-    # Check if the directory passed in as argument already has the directory 
+    # Check if the directory passed in as argument already has the directory
     # 'Modified_files', else create it.
     if not os.path.exists(os.path.join(directory, "Modified_files")):
         os.mkdir(os.path.join(directory, "Modified_files"))
@@ -327,7 +328,7 @@ def main():
             process_file(directory, directory + "/" + file, file)
 
     else:
-        # If no file was passed in as input, then extract all files in the 
+        # If no file was passed in as input, then extract all files in the
         # directory passed in, with extension '.html'
         for file in os.listdir(directory):
             if file.endswith(".html"):
