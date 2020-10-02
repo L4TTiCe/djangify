@@ -37,7 +37,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 APP_NAME = ""
 
 
-def displayPathInfo():
+def display_path_info():
     # TODO: Remove unwanted / unused functions
     """
     A simple function to state the current and working directory
@@ -49,7 +49,7 @@ def displayPathInfo():
     logging.info("Directory name is : " + foldername)
 
 
-def checkLine(line: str):
+def check_line(line: str):
     """
     A funtion that checks if a string passed to this function contains key
     words that need to be processed further
@@ -62,9 +62,9 @@ def checkLine(line: str):
     Returns
     -------
     list\n
-            a list of words found in the string 'line', if the word is a keyword,
-            then instead of only the word, a tuple in the form of (True, word) is
-            added
+            a list of words found in the string 'line', if the word is
+            a keyword,then instead of only the word, a tuple in the
+            form of (True, word) is added
     """
 
     key_words = ['src', 'href', 'url']
@@ -81,7 +81,7 @@ def checkLine(line: str):
         return out
 
 
-def containsURL(line: str):
+def contains_url(line: str):
     """
     Checks if the line contains any URLs
 
@@ -96,23 +96,23 @@ def containsURL(line: str):
             True if it contains URL and False if no URL in 'line'
     """
 
-    URL = "(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))" \
-        "([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+    URL = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))" \
+          r"([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
     if re.match(URL, line):
         return True
     else:
         return False
 
 
-def getIndex(line: str, word: str):
+def get_index(line: str, word: str):
     """
     Get the starting and ending index of a word in a given string
 
     Parameters
     ----------
     line : str\n
-            A string containing the 'word' from which indexes are to be extracted
-            from
+            A string containing the 'word' from which indexes are
+            to be extracted from
     word : str\n
             A string that need to be found in the 'line', and need indexes
             extracted
@@ -142,8 +142,8 @@ def getIndex(line: str, word: str):
         start = (index + len(word) + 2)
         quote = line[start - 1]
         end = line.find(quote, start)
-        
-    return (start, end)
+
+    return start, end
 
 
 def djangify(line: str):
@@ -165,7 +165,7 @@ def djangify(line: str):
 
     # Don't change the contents of the line if it contails a URL that links
     # outside content. Ex. www.example.com/webpage.html
-    if containsURL(line):
+    if contains_url(line):
         return line
     # Don't change the line if it contains placeholder URL like '#'
     if line == '#':
@@ -175,7 +175,7 @@ def djangify(line: str):
     return " {% static '" + APP_NAME + line + "' %} "
 
 
-def processLine(line: str):
+def process_line(line: str):
     """
     Processes the line (string) of text passed in as parameter into django
     compatible HTML by calling the djangify(...) function.
@@ -190,15 +190,15 @@ def processLine(line: str):
     str\n
             Translated HTML that is Django compatible
     """
-    
+
     # Converts line into a list of words, using checkLine()
-    instances = checkLine(line)
+    instances = check_line(line)
 
     buffer = line
 
     if instances:
         for instance in instances:
-            index = getIndex(buffer, instance[1])
+            index = get_index(buffer, instance[1])
             out = djangify(buffer[index[0]: index[1]])
             text = buffer[: index[0]] + out + buffer[index[1]:]
             buffer = text
@@ -206,13 +206,13 @@ def processLine(line: str):
     return buffer
 
 
-def processFile(directory: str, filepath: str, fname: str):
+def process_file(directory: str, filepath: str, fname: str):
     """
     Prcocesses the file passed in as parameter, translating it into django
     friendly HTML.
 
     Saves the translated files in a newly created directory, "Modified_files"
-    
+
     Parameters
     ----------
     directory : str\n
@@ -231,7 +231,7 @@ def processFile(directory: str, filepath: str, fname: str):
     save_path = os.path.join(save_path, fname)
     # Open a blank file to write translated HTML to
     f = open(save_path + "." + extension, "w+")
-    f.write("{% load static %}"
+    f.write("{% load static %}")
     f.write("\n")
 
     try:
@@ -242,7 +242,7 @@ def processFile(directory: str, filepath: str, fname: str):
             cnt = 1
             while line:
                 # process the line extracted
-                temp = processLine(line)
+                temp = process_line(line)
                 line = fp.readline()
                 cnt += 1
                 # write the processed line to the newly created file
@@ -266,8 +266,9 @@ def main():
 
     # Defines Argument Parser and fefines flags and expected inputs
     parser = argparse.ArgumentParser(
-        description='Converts specified html files or all html files to \
-			django format within a \n specified directory.'
+        description='Converts specified html files or '
+                    'all html files to django format within '
+                    'a \n specified directory.'
     )
     # Defines the -f flag, standing for files, to gey file nameof the HTML
     # file to convert
@@ -317,20 +318,21 @@ def main():
     logging.info("Directory : " + str(directory))
     logging.info("app_name  : " + str(app_name))
 
-    # Check if the directory passed in as argument already has the directory 
+    # Check if the directory passed in as argument already has the directory
     # 'Modified_files', else create it.
     if not os.path.exists(os.path.join(directory, "Modified_files")):
         os.mkdir(os.path.join(directory, "Modified_files"))
 
-    if files != []:
+    if files:
         for file in files:
-            processFile(directory, directory + "/" + file, file)
+            process_file(directory, directory + "/" + file, file)
 
     else:
-        # If no file was passed in as input, then extract all files in the 
+        # If no file was passed in as input, then extract all files in the
         # directory passed in, with extension '.html'
         for file in os.listdir(directory):
             if file.endswith(".html"):
-                processFile(directory, directory + "/" + file, file)
+                process_file(directory, directory + "/" + file, file)
+
 
 main()
