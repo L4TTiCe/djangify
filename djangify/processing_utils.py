@@ -1,7 +1,7 @@
 import re
 
 
-def check_line(line: str):
+def check_line(line: str) -> list:
     """
     A funtion that checks if a string passed to this function contains key
     words that need to be processed further
@@ -33,7 +33,7 @@ def check_line(line: str):
         return out
 
 
-def contains_url(line: str):
+def contains_url(line: str) -> bool:
     """
     Checks if the line contains any URLs
 
@@ -56,9 +56,11 @@ def contains_url(line: str):
         return False
 
 
-def get_index(line: str, word: str):
+def get_index(line: str, word: str) -> tuple:
     """
-    Get the starting and ending index of a word in a given string
+    Helper function to get the starting and ending positions of content to be
+    put between the static tag. It is not supposed to return None as we are
+    already checking for the presence of keywords in the line
 
     Parameters
     ----------
@@ -98,7 +100,7 @@ def get_index(line: str, word: str):
     return start, end
 
 
-def djangify(line: str, app_name: str):
+def djangify(line: str, app_name: str) -> str:
     """
     Translates the string passed to the function to Django compatible HTML
 
@@ -127,7 +129,7 @@ def djangify(line: str, app_name: str):
     return " {% static '" + app_name + line + "' %} "
 
 
-def process_line(line: str, app_name: str):
+def process_line(line: str, app_name: str) -> str:
     """
     Processes the line (string) of text passed in as parameter into django
     compatible HTML by calling the djangify(...) function.
