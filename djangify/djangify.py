@@ -170,12 +170,10 @@ def main():
         os.mkdir(os.path.join(directory, "Modified_files"))
 
     if files:
-        print("here")
         for file in files:
             process_file(directory, directory + "/" + file, file)
 
     else:
-        print("no files found")
         # If no file was passed in as input, then extract all files in the
         # directory passed in, with extension '.html'
         for file in os.listdir(directory):
