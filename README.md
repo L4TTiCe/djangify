@@ -1,4 +1,7 @@
 # Djangify
+
+![djangify](https://github.com/L4TTiCe/djangify/workflows/djangify/badge.svg)
+
 A Python script that converts HTML Files / Templates to Django compatible HTML Templates. 
 Brought to you by : <a href="https://ohuru.tech/">Ohuru</a>
 
