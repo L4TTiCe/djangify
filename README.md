@@ -12,7 +12,7 @@ Brought to you by : <a href="https://ohuru.tech/">Ohuru</a>
 ## Usage Info
     
     username@hostname $ djangify -h
-    usage: djangify.py [-h] [-d [BASE_DIRECTORY]] [-a [APP_NAME]] [f [f ...]]
+    usage: djangify [-h] [-d [BASE_DIRECTORY]] [-a [APP_NAME]] [f [f ...]]
 
     Converts specified html files or all html files to django format within a
     specified directory.
