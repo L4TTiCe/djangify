@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import re
 
 
@@ -19,7 +21,7 @@ def check_line(line: str):
             form of (True, word) is added
     """
 
-    key_words = ['src', 'href', 'url']
+    key_words = ["src", "href", "url"]
     out = list()
     for word in key_words:
         if line.__contains__(word):
@@ -48,8 +50,10 @@ def contains_url(line: str):
             True if it contains URL and False if no URL in 'line'
     """
 
-    URL = r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))" \
-          r"([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+    URL = (
+        r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))"
+        r"([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"
+    )
     if re.match(URL, line):
         return True
     else:
@@ -78,20 +82,20 @@ def get_index(line: str, word: str):
 
     index = line.find(word)
 
-    if word in ['url']:
-        start = (index + len(word) + 2)
+    if word in ["url"]:
+        start = index + len(word) + 2
         quote = line[start - 1]
-        if quote not in ['\'', '"']:
-            start = (index + len(word) + 1)
+        if quote not in ["'", '"']:
+            start = index + len(word) + 1
             quote = line[start - 1]
-            if quote == '(':
-                end = line.find(')', start)
+            if quote == "(":
+                end = line.find(")", start)
             else:
                 end = line.find(quote, start)
         else:
             end = line.find(quote, start)
     else:
-        start = (index + len(word) + 2)
+        start = index + len(word) + 2
         quote = line[start - 1]
         end = line.find(quote, start)
 
@@ -120,7 +124,7 @@ def djangify(line: str, app_name: str):
     if contains_url(line):
         return line
     # Don't change the line if it contains placeholder URL like '#'
-    if line == '#':
+    if line == "#":
         return line
     # If line links to an internal file, make it Django compatible by loading
     # from static directory appended with app_name
@@ -153,8 +157,8 @@ def process_line(line: str, app_name: str):
     if instances:
         for instance in instances:
             index = get_index(buffer, instance[1])
-            out = djangify(buffer[index[0]: index[1]], app_name)
-            text = buffer[: index[0]] + out + buffer[index[1]:]
+            out = djangify(buffer[index[0] : index[1]], app_name)
+            text = buffer[: index[0]] + out + buffer[index[1] :]
             buffer = text
 
     return buffer

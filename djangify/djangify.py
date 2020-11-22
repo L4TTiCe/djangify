@@ -29,10 +29,10 @@ import os
 import argparse
 import logging
 
-from .processing_utils import process_line
+from djangify.processing_utils import process_line
 
 # Set default logging level to INFO
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
 
 # Initialize global variable APP_NAME
 APP_NAME = ""
@@ -94,13 +94,18 @@ def process_file(directory: str, filepath: str, fname: str, app_name: str = APP_
                 # write the processed line to the newly created file
                 f.write(temp)
     except IOError:
-        logging.error('An error occurred trying to read the file.')
+        logging.error("An error occurred trying to read the file.")
     finally:
         # Close the file to save changes
         f.close()
 
-    logging.info("Succeeded.. Generated Modified_Files/" + fname +
-                 "." + extension + " in the directory passed.")
+    logging.info(
+        "Succeeded.. Generated Modified_Files/"
+        + fname
+        + "."
+        + extension
+        + " in the directory passed."
+    )
 
 
 def main():
@@ -112,36 +117,24 @@ def main():
 
     # Defines Argument Parser and fefines flags and expected inputs
     parser = argparse.ArgumentParser(
-        description='Converts specified html files or '
-                    'all html files to django format within '
-                    'a \n specified directory.'
+        description="Converts specified html files or "
+        "all html files to django format within "
+        "a \n specified directory."
     )
     # Defines the -f flag, standing for files, to gey file nameof the HTML
     # file to convert
     parser.add_argument(
-        'files',
-        metavar='f',
-        type=str,
-        nargs='*',
-        help='provide file names to convert'
+        "files", metavar="f", type=str, nargs="*", help="provide file names to convert"
     )
     # Defines the -a flag, for defining the APP_NAME, you want the file
     # converted to, for.
     parser.add_argument(
-        '-a',
-        dest='app_name',
-        type=str,
-        nargs='?',
-        help='provide django app name'
+        "-a", dest="app_name", type=str, nargs="?", help="provide django app name"
     )
     # Defines the -d flag, standing for directory, which accepts the path
     # to a directory containing the files to be translated
     parser.add_argument(
-        '-d',
-        dest='base_directory',
-        type=str,
-        nargs='?',
-        help='Provide base directory'
+        "-d", dest="base_directory", type=str, nargs="?", help="Provide base directory"
     )
 
     # Parse the Arguments from the user
