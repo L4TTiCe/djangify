@@ -20,14 +20,16 @@ positional arguments:
 
 optional arguments:
   -h, --help           show this help message and exit
-  -d [BASE_DIRECTORY]  Provide base directory
   -a [APP_NAME]        provide django app name
-
+  -d [BASE_DIRECTORY]  provide base directory
+  -e [ENCODING]        provide encoding
 """
 
 import os
 import argparse
 import logging
+import locale
+import encodings
 
 from djangify.processing_utils import process_line
 
@@ -50,7 +52,7 @@ def display_path_info():
     logging.info("Directory name is : " + foldername)
 
 
-def process_file(directory: str, filepath: str, fname: str, app_name: str = APP_NAME):
+def process_file(directory: str, filepath: str, fname: str, encoding: str, app_name: str = APP_NAME):
     """
     Prcocesses the file passed in as parameter, translating it into django
     friendly HTML.
@@ -76,13 +78,13 @@ def process_file(directory: str, filepath: str, fname: str, app_name: str = APP_
     save_path = os.path.join(directory, "Modified_files")
     save_path = os.path.join(save_path, fname)
     # Open a blank file to write translated HTML to
-    f = open(save_path + "." + extension, "w+")
+    f = open(save_path + "." + extension, "w+", encoding=encoding)
     f.write("{% load static %}")
     f.write("\n")
 
     try:
         # Opening the file
-        with open(filepath) as fp:
+        with open(filepath, encoding=encoding) as fp:
             # Reading data line-by-line
             line = fp.readline()
             cnt = 1
@@ -134,7 +136,12 @@ def main():
     # Defines the -d flag, standing for directory, which accepts the path
     # to a directory containing the files to be translated
     parser.add_argument(
-        "-d", dest="base_directory", type=str, nargs="?", help="Provide base directory"
+        "-d", dest="base_directory", type=str, nargs="?", help="provide base directory"
+    )
+    # Defines the -e flag, which means encoding, accepting the encoding 
+    # of the files to be translated
+    parser.add_argument(
+        "-e", dest="encoding", type=str, nargs="?", help="provide encoding"
     )
 
     # Parse the Arguments from the user
@@ -144,6 +151,7 @@ def main():
     files = args.files
     directory = args.base_directory
     app_name = args.app_name
+    encoding = args.encoding
 
     # If APP_NAME is not passes in as an argument, leave it as ''(empty)
     if app_name is not None:
@@ -154,8 +162,16 @@ def main():
     if directory is None:
         directory = os.getcwd()
 
+    # If encoding is not passed in as an argument or passed but is invalid one 
+    # use the locale encoding used for text data, according to user preferences.
+    # [Python Docs](https://docs.python.org/3/library/locale.html#locale.getpreferredencoding)
+    if (encoding is None or encodings.search_function(encoding) is None):
+        encoding = locale.getpreferredencoding()
+        
+
     logging.info("Directory : " + str(directory))
-    logging.info("app_name  : " + str(app_name))
+    logging.info("app_name  : " + str(APP_NAME))
+    logging.info("Encoding  : " + str(encoding))
 
     # Check if the directory passed in as argument already has the directory
     # 'Modified_files', else create it.
@@ -164,11 +180,11 @@ def main():
 
     if files:
         for file in files:
-            process_file(directory, directory + "/" + file, file)
+            process_file(directory, directory + "/" + file, file, encoding)
 
     else:
         # If no file was passed in as input, then extract all files in the
         # directory passed in, with extension '.html'
         for file in os.listdir(directory):
             if file.endswith(".html"):
-                process_file(directory, directory + "/" + file, file)
+                process_file(directory, directory + "/" + file, file, encoding)
