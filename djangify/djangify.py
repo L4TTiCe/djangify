@@ -171,7 +171,7 @@ def main():
 
     logging.info("Directory : " + str(directory))
     logging.info("app_name  : " + str(APP_NAME))
-    logging.info("Encoding  : " + str(encoding))
+    logging.debug("Encoding  : " + str(encoding))
 
     # Check if the directory passed in as argument already has the directory
     # 'Modified_files', else create it.
