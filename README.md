@@ -22,8 +22,9 @@ Brought to you by : <a href="https://ohuru.tech/">Ohuru</a>
 
     optional arguments:
       -h, --help           show this help message and exit
-      -d [BASE_DIRECTORY]  Provide base directory
       -a [APP_NAME]        provide django app name
+      -d [BASE_DIRECTORY]  provide base directory
+      -e [ENCODING]        provide encoding
     
 ## Description
 Converts all the HTML files specified in the files (' f ') argument into Django templates, replacing the contents of 'src', 'href' and 'url' tags with their Django compatible static conterparts with their Django App name prefixed.
