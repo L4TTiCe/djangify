@@ -79,8 +79,7 @@ def process_file(directory: str, filepath: str, fname: str, encoding: str, app_n
     save_path = os.path.join(save_path, fname)
     # Open a blank file to write translated HTML to
     f = open(save_path + "." + extension, "w+", encoding=encoding)
-    f.write("{% load static %}")
-    f.write("\n")
+    f.write("{% load static %}\n")
 
     try:
         # Opening the file
@@ -171,7 +170,7 @@ def main():
 
     logging.info("Directory : " + str(directory))
     logging.info("app_name  : " + str(APP_NAME))
-    logging.debug("Encoding  : " + str(encoding))
+    logging.info("Encoding  : " + str(encoding).upper())
 
     # Check if the directory passed in as argument already has the directory
     # 'Modified_files', else create it.

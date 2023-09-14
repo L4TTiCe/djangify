@@ -20,11 +20,14 @@ def check_line(line: str):
             a keyword,then instead of only the word, a tuple in the
             form of (True, word) is added
     """
-
+    exclude_tags = ["a"]
     key_words = ["src", "href", "url"]
-    out = list()
+    out = []
     for word in key_words:
         if line.__contains__(word):
+            # Exclude if the line contains one of the exclude_tags
+            if any(tag in line for tag in exclude_tags):
+                continue
             out.append((True, word))
 
     # Check if output list is not empty
